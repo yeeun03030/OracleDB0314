@@ -63,5 +63,9 @@ public class MemoRepositoryTests {
         System.out.println(memo1);
     }
 
-
+    @Test
+    public void testDelete() {
+        Long mno = 100L;
+        memoRepository.deleteById(mno);
+    }
 }
