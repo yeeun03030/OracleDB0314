@@ -20,6 +20,7 @@ public class MemoRepositoryTests {
         System.out.println(memoRepository.getClass().getName());
     }
 
+    // MemoRepository에 save(Memo Entity 객체의 참조값)메소드를 호출해서 select후 없을 경우 Insert를 한다.
     @Test
     public void testInsertDummies() {
         IntStream.rangeClosed(1, 100).forEach(i -> {
@@ -28,6 +29,10 @@ public class MemoRepositoryTests {
         });
     }
 
+    // memoRepository에 findById(Memo Entity 객체의 Id로 설정된 필드값)메소드를 호출해서 select한다.
+    // findById()가 호출되면 바로 실행된다.
+    // findById()는 NullPointerException이 발생하지 않도록 Null체크를 해준다.
+    // Optional로 반환해준다.
     @Test
     public void testSelect() {
         Long mno = 100L; // Long형에는 L 붙혀야함
@@ -42,6 +47,9 @@ public class MemoRepositoryTests {
         }
     }
 
+    // memoRepository에 getOne(Memo Entity 객체의 Id로 설정된 필드값)메소드를 호출해서 select한다.
+    // getOne()메소드를 통해 저장된 변수를 호출할 시 실행된다.
+    // getOne()은 호출되면 바로 실행되지 않고 Memo Entity가 필요할 때 select를 실행한다.
     @Transactional
     @Test
     public void testSelect2() {
@@ -54,6 +62,8 @@ public class MemoRepositoryTests {
         System.out.println(memo);
     }
 
+    // MemoRepository의 save(Memo Entity 객체의 참조값)를 호출해서 update 한다.
+    // save()메소드를 호출하면 select를 먼저 하기 때문에기존에 Entity가 있을 때는 update를 실행한다.
     @Test
     public void testUpdate() {
         Memo memo = Memo.builder().mno(95L).memoText("Update Dummy Data 95").build();
@@ -63,5 +73,10 @@ public class MemoRepositoryTests {
         System.out.println(memo1);
     }
 
-
+    // MemoRepository의 deleteById(MemoEntity의 mno 값)를 호출해서 delete 한다.
+    @Test
+    public void testDelete() {
+        Long mno = 100L;
+        memoRepository.deleteById(mno);
+    }
 }
